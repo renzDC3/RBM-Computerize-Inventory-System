@@ -13,11 +13,10 @@ if (isset($_POST['submit'])) {
         $_SESSION['valid'] = $row['Username'];
         $_SESSION['id'] = $row['Id'];
 
-        // Direct login, skip 2FA
-        header("Location: dashboard.php"); // Replace 'dashboard.php' with your actual page after login
+        header("Location: dashboard.php");
         exit();
     } else {
-        $error_message = "Wrong Username or Password";
+        $error_message = "Wrong Username or Password!";
     }
 }
 ?>
@@ -25,91 +24,37 @@ if (isset($_POST['submit'])) {
 <!DOCTYPE html>
 <html>
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="styles/indexStyle.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <script src="https://kit.fontawesome.com/8a559c8a28.js" crossorigin="anonymous"></script>
-    <title>Login - Inventory Management System</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="styles/indexStyle.css">
 
-<style>
-    .login_error_message {
-        color:white; 
-        text-shadow: 5px 5px 10px black; 
-        text-align:center;
-        transition: .1s;
-    }
-
-    .dmbutton {
-        background-color: #950606; 
-        font-size: 25px;
-    }
-    
-    .dark-mode{
-        .login_error_message {
-            color:red; 
-            transition: .1s;
-        }
-            
-        .dmbutton {
-          background-color: #3a3b3c;      
-        }
-    }
-</style>
 </head>
-
 <body>
 
-<div class="container">
-    &nbsp;
-    <button class="dmbutton" onclick="toggleDarkMode()"><i class="fa-solid fa-moon"></i></button>
-    <form action="" method="post">
-        <div class="row">
-            <h1 style="text-align:center">Inventory Management System</h1>
+<h2>Inventory Management System</h2>
 
-            <div class="col">
-                <center>
-                    <img src="rbm_logo.jpg" alt="Logo">
-                </center>
-            </div>
+<form action="" method="post">
+  <div class="imgcontainer">
+    <img src="images/rbm_logo.jpg" alt="Avatar" class="avatar">
+  </div>
 
-            <div class="col">
-                <?php if (isset($error_message)): ?>
-                    <div class="login_error_message">
-                        <?php echo $error_message; ?>
-                    </div>
-                <?php endif; ?>
-
-                <input class="usernameInputBox" type="text" name="username" placeholder="Username" required>
-                <input type="password" name="password" placeholder="Password" required>
-                <input type="submit" name="submit" value="Login">
-            </div>
-        </div>
-    </form>
-</div>
-
-<div class="bottom-container">
-    <div class="row">
-        <a href="#" style="color:white" class="btn"></a>
+  <?php if (isset($error_message)): ?>
+    <div class="login_error_message">
+        <?php echo $error_message; ?>
     </div>
-</div>
+  <?php endif; ?>
 
-<script>
-    function toggleDarkMode() {
-        var element = document.body;
-        element.classList.toggle("dark-mode");
-        if (element.classList.contains("dark-mode")) {
-            localStorage.setItem("dark-mode", "enabled");
-        } else {
-            localStorage.setItem("dark-mode", "disabled");
-        }
-    }
+  <div class="container">
+    <label for="uname"><b>Username</b></label>
+    <input type="text" name="username" placeholder="Username" required>
 
-    window.onload = function() {
-        if (localStorage.getItem("dark-mode") === "enabled") {
-            document.body.classList.add("dark-mode");
-        }
-    }
-</script>
+    <label for="psw"><b>Password</b></label>
+    <input type="password" name="password" placeholder="Password" required>
+        
+    <button type="submit" name="submit" value="Login">Login</button>
+    
+  </div>
+
+</form>
 
 </body>
 </html>

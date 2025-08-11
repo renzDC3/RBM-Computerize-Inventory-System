@@ -7,7 +7,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $product_id = $_POST['product_id'];
     $qty = $_POST['qty'];
     //$date = $_POST['date'];
-    $delivery_id = $_POST['delivery_id'];
 
     // Get the logged-in user's ID
     $user_id = $_SESSION['id'];
@@ -19,8 +18,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $date = date('Y-m-d H:i:s'); // Format: YYYY-MM-DD HH:MM:SS
 
     // Prepare an SQL statement to insert into stock_in (including user_id)
-    $stmt = $con->prepare("INSERT INTO stock_in (product_id, qty, date_time, delivery_id, Id) VALUES (?, ?, ?, ?, ?)");
-    $stmt->bind_param("iissi", $product_id, $qty, $date, $delivery_id, $user_id); // Added user_id
+    $stmt = $con->prepare("INSERT INTO stock_in (product_id, qty, date_time, Id) VALUES (?, ?, ?, ?)");
+    $stmt->bind_param("iisi", $product_id, $qty, $date, $user_id); // Added user_id
 
     // Execute the statement for stock_in
     if ($stmt->execute()) {
@@ -32,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         if ($update_stmt->execute()) {
             // Successfully updated the products table
-            header("Location: inventory_list.php"); // Redirect to your inventory list page
+            header("Location: products.php"); // Redirect to your inventory list page
             exit();
         } else {
             // Handle error in updating products

@@ -1,11 +1,3 @@
 <?php
-$con = mysqli_connect("localhost", "root", "", "4530883_rbm");
-if (!$con) {
-    die("Database connection failed: " . mysqli_connect_error());
-}
-
-
-
-
-    
+    $con = mysqli_connect("localhost", "root", "", "inventory_and_sales_system_database") or die("Couldn't connect");
 ?>

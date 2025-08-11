@@ -1,0 +1,195 @@
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Topnav */
+
+.topnav {
+  position:sticky;
+  top:0;
+  overflow: hidden;
+  background-color: #880808;
+  font-size: smaller;
+}
+
+.topnav a {
+  float: left;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 17px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+.topnav a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+.topnav a.active {
+  background-color: #222222;
+  color: white;
+}
+
+.topnav a.image{
+    background-color: black;
+    padding: 17px 16px;
+}
+
+.topnav a.logout{
+    float:right;
+}
+
+/* Filtering */
+
+form.example input[type=text] {
+  padding: 10px;
+  font-size: 17px;
+  border: 1px solid grey;
+  float: left;
+  width: 80%;
+  background: #f1f1f1;
+}
+
+form.example button {
+  float: left;
+  width: 20%;
+  padding: 10px;
+  background: #2196F3;
+  color: white;
+  font-size: 17px;
+  border: 1px solid grey;
+  border-left: none;
+  cursor: pointer;
+}
+
+form.example button:hover {
+  background: #0b7dda;
+}
+
+form.example::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+.searchbar{
+    display:flex;
+    background-color: #880808;
+    color:white;
+}
+
+.searchbar p {
+    padding-left:16px
+}
+
+.searchbar input[type=text] {
+  margin-top: 12.99px;
+  margin-left: 10px;
+  font-size: medium;
+}
+
+.searchbar select {
+    margin-top: 15px;
+    font-size: medium;
+}
+
+.category{
+    padding-left:16px;
+}
+
+/* Table */
+
+.productsTable{
+    background-color: white;
+    height: 435px;
+    overflow-y:scroll;
+}
+
+.productsTable table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
+  border: 1px solid #ddd;
+  background-color: white; 
+}
+
+th, td {
+  text-align: left;
+  padding: 16px;
+}
+
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.addProduct {
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  background-color: white;
+  margin-top: 15.75px;
+  margin-left: 16px;
+  border-radius: 5px;
+}
+
+/* General Modal Style */
+
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+  background-color: #fefefe;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+  color: black;
+}
+
+/* The Close Button */
+.close {
+  color: #aaaaaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* Modal Style */
+
+.modalHorizontal {
+  display:flex;
+}
+
+.modalHorizontal input[type=text], .modalHorizontal input[type=number], .modalHorizontal select{
+  margin: -3px 12px;
+}
+
+.modalHorizontal select{
+  margin-right: 16px;
+}
+
+.confirmOrCancel {
+  margin-top: 10px;
+}

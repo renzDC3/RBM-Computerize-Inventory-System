@@ -1,0 +1,64 @@
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.topnav {
+  position:sticky;
+  top:0;
+  overflow: hidden;
+  background-color: #880808;
+  font-size: smaller;
+}
+
+.topnav a {
+  float: left;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 17px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+.topnav a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+.topnav a.active {
+  background-color: #222222;
+  color: white;
+}
+
+.topnav a.image{
+    background-color: black;
+    padding: 17px 16px;
+}
+
+.topnav a.logout{
+    float:right;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.checkout{
+  background-color: #880808;
+  width: 50%;
+  margin: auto;
+  color: white;
+  padding: 5px 12px 0px 12px;
+  height: 470px;
+  
+}
+
+.checkout input[type=text]{
+  width: 100%;
+}
+
+.product-list{
+  background-color: white;
+  height: 100px;
+  overflow-y: scroll;
+}

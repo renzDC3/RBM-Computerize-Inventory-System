@@ -35,7 +35,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 echo "Error preparing history statement: " . mysqli_error($con);
             }
 
-            header("Location: inventory_list.php");
+            header("Location: products.php");
             exit;
         } else {
             echo "Error deleting product: " . mysqli_error($con);

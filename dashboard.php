@@ -11,147 +11,29 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="styles/all.css">
 <link rel="stylesheet" href="styles/dashboardStyle.css">
-
 </head>
-
-<style>
-    i {
-      color: #121212;
-    } 
-
-    .sidenavIcon {
-      color: white;
-    }
-
-  .dark-mode { 
-    i {
-      color: white;
-    }
-    
-    .modal-content {
-      background-color: #3a3b3c;
-      color: white;      
-    }
-  }
-
-  .charts-card {
-    width: 97.5%;
-    margin-top: 10px;
-    margin-left: auto;
-    margin-right: auto;
-  }
-        
-.modal {
-  display: none; 
-  position: fixed; 
-  z-index: 1; 
-  left: 0;
-  top: 0;
-  width: 100%; 
-  height: 100%;
-  overflow: auto; 
-  background-color: rgb(0,0,0); 
-  background-color: rgba(0,0,0,0.4); 
-  padding-top: 60px;
-}
-
-.modal-content {
-  background-color: #fefefe;
-  margin: 5% auto 15% auto; 
-  border: 1px solid #888;
-  width: 50%; 
-  border-radius: 8px;
-  color: black;
-  float: center;
-}
-
-.close {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-}
-
-.close:hover,
-.close:focus {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
-}
-
-
-  @media only screen and (max-width: 600px) {
-    .charts-card {
-    width: 90.5%;
-    margin-top: 10px;
-    margin-left: auto;
-    margin-right: auto;
-  }
-  }
-  
-</style>
-
-
 <body>
 
 <div class="topnav">
-    &nbsp;
-    <span style="font-size:30px;cursor:pointer;color:white" onclick="openNav()">&#9776;</span>
-    &nbsp;
-    <button class="dmbutton" onclick="toggleDarkMode()"><i class="fa-solid fa-moon"></i></button>
-    <a href="logout.php" class="split"><i class="fa-solid fa-right-to-bracket"></i> Logout</a>
+  <a class="image"><img src="images/rbm_tex.jpg" style="width: 50px; height: 15px"></a>
+  <a class="active" href="#home">Dashboard</a>
+  <a href="products.php">Products</a>
+  <a href="sales.php">Sales</a>
+  <a href="history.php">History</a>
+  <a class="logout" href="logout.php">Logout</a>
 </div>
-
-<div id="mySidenav" class="sidenav">
-  <center><img src="rbm_logo.jpg" alt="RBM Logo" height="150" width="150"></center>
-  <a href="javascript:void(0)" class="sidenavIcon closebtn" onclick="closeNav()">&times;</a>
-  <a href="dashboard.php"><i class="sidenavIcon fa-solid fa-chart-line"></i> Dashboard</a>
-  <a href="inventory_list.php"><i class="fa-solid sidenavIcon fa-box-open"></i> Products</a>
-  <a href="ordering.php"><i class="sidenavIcon fa-solid fa-cart-shopping"></i> Ordering</a>
-  <a href="add_product_history.php"><i class="sidenavIcon fa-solid fa-clock-rotate-left"></i> Product Adding History</a>
-  <a href="stock_in_history.php"><i class="sidenavIcon fa-solid fa-clock-rotate-left"></i> Stock-In History</a>
-  <a href="edit_product_history.php"><i class="sidenavIcon fa-solid fa-clock-rotate-left"></i> Product Editing History</a>
-  <a href="adjustment_history.php"><i class="sidenavIcon fa-solid fa-clock-rotate-left"></i> Adjustment History</a>
-  <a href="delete_product_history.php"><i class="sidenavIcon fa-solid fa-clock-rotate-left"></i> Product Deletion History</a>
-  <a href="order_history.php"><i class="sidenavIcon fa-solid fa-clock-rotate-left"></i> Ordering History</a>
-</div>
-
-<?php
-
-			
-
-            $id = $_SESSION['id'];
-            $query = mysqli_query($con,"SELECT*FROM users WHERE Id=$id");
-
-            while($result = mysqli_fetch_assoc($query)){
-                $res_Username = $result['Username'];
-            }
-        ?>
 
 <div style="padding-left:16px">
-  <h1>Welcome Back, <?php echo "$res_Username"?></h1>
-  <p>Take a look at the current stats of our inventory system.</p>
-  
+  <h2>Monthly Stats</h2>
+  <p>Come see......</p>
 </div>
 
-
-<hr class="hrRed">
-
-<div class="topdash">
-  <h1>
-    Dashboard
-  </h1>
-  <h4>
-    (Monthly Stats)
-  </h4>
-  <center>
-          
-<div class="insidetopdash" id="showModalBtn">
-    <h3><i class="fa-solid fa-box"></i> Total Unique Products</h3>
-    <h1 style="color: #950606;">
-        <?php
+<div class="row">
+  <div class="column" id="showModalBtn" style="background-color:#dcdcdc;">
+    <h2>No. of Products</h2>
+    <p>
+      <?php
           $sql = "SELECT COUNT(*) AS total FROM products";
           $result = $con->query($sql);
 
@@ -161,76 +43,37 @@
               echo "Error retrieving count";
           }
         ?>
-    </h1>
-</div>
+    </p>
+  </div>
 
-<div id="productModal" class="modal">
+  <!-- No. of Products Modal -->
+
+  <div id="productModal" class="modal">
     <div class="modal-content">
         <span class="close">&times;</span>
-        <center><h2>Total Unique Products</h2>
-        <p>Here you can provide additional details or data about the products.</p></center>
-        
-        <?php
-        $sql = "SELECT name FROM products";
-        $result = $con->query($sql);
+        <h2>The Store's Products</h2>
+        <p>Here you can provide additional details or data about the products.</p>
+        <div style="height: 350px; overflow-y:scroll">
+          <?php
+          $sql = "SELECT name FROM products";
+          $result = $con->query($sql);
 
-        if ($result && $result->num_rows > 0) {
-            while ($row = $result->fetch_assoc()) {
-                echo "<center><h3>" . htmlspecialchars($row['name']) . "</h3></center>";
-            }
-        } else {
-            echo "<p>No products found.</p>";
-        }
-        ?>
+          if ($result && $result->num_rows > 0) {
+              while ($row = $result->fetch_assoc()) {
+                  echo "<center><h3>" . htmlspecialchars($row['name']) . "</h3></center>";
+              }
+          } else {
+              echo "<p>No products found.</p>";
+          }
+          ?>
+        </div>
     </div>
-</div>
+  </div>
 
-<div id="lowStockModal" class="modal">
-    <div class="modal-content">
-        <span class="close" id="closeLowStockModal">&times;</span>
-        <h2>Low Stock Products</h2>
-        <p>Here you can list products with low stock (less than 5 units).</p>
-        
-        <?php
-        $query = "SELECT * FROM products WHERE quantity < 5";
-        $result = mysqli_query($con, $query);
-        if ($result) {
-            while ($row = mysqli_fetch_assoc($result)) {
-                echo "<h3>{$row['name']}</h3>";
-            }
-        } else {
-            echo "Error: " . mysqli_error($con);
-        }
-        ?>
-    </div>
-</div>
-
-<div id="outOfStockModal" class="modal">
-    <div class="modal-content">
-        <span class="close" id="closeOutOfStockModal">&times;</span>
-        <center>
-        <h2>Out of Stock Products</h2>
-        <p>Here you can list products that are out of stock.</p>
-        
-        <?php
-        $query = "SELECT * FROM products WHERE quantity < 1";
-        $result = mysqli_query($con, $query);
-        if ($result) {
-            while ($row = mysqli_fetch_assoc($result)) {
-                echo "<center><h3>{$row['name']}</h3></center>";
-            }
-        } else {
-            echo "Error: " . mysqli_error($con);
-        }
-        ?>
-    </div>
-</div>
-
-
-<div class="insidetopdash" id="lowStockBtn">
-    <h3><i class="fa-solid fa-arrow-trend-down"></i> Low Stock</h3>
-    <h1 style="color: #950606;">
-        <?php
+  <div class="column" style="background-color:#d3d3d3;" id="lowStockBtn">
+    <h2>Low Stock</h2>
+    <p>
+       <?php
             $sql = "SELECT COUNT(*) AS total FROM products WHERE quantity < 5";
             $result = $con->query($sql);
             if ($result && $row = $result->fetch_assoc()) {
@@ -239,12 +82,35 @@
                 echo "Error retrieving count";
             }
         ?>
-    </h1>
-</div>
+    </p>
+  </div>
 
-<div class="insidetopdash" id="outOfStockBtn">
-    <h3><i class="fa-solid fa-sack-xmark"></i> Out of Stock</h3>
-    <h1 style="color: #950606;">
+  <!-- Low Stock Products Modal -->
+
+  <div id="lowStockModal" class="modal">
+    <div class="modal-content">
+        <span class="close" id="closeLowStockModal">&times;</span>
+        <h2>Low Stock Products</h2>
+        <p>Here you can list products with low stock (less than 5 units).</p>
+        <div style="height: 350px; overflow-y:scroll">
+          <?php
+          $query = "SELECT * FROM products WHERE quantity < 5";
+          $result = mysqli_query($con, $query);
+          if ($result) {
+              while ($row = mysqli_fetch_assoc($result)) {
+                  echo "<h3>{$row['name']}</h3>";
+              }
+          } else {
+              echo "Error: " . mysqli_error($con);
+          }
+          ?>
+        </div>
+    </div>
+  </div>          
+
+  <div id="outOfStockBtn" class="column" style="background-color:#c0c0c0;">
+    <h2>Out of Stock</h2>
+    <p>
         <?php
             $sql = "SELECT COUNT(*) AS total FROM products WHERE quantity < 1";
             $result = $con->query($sql);
@@ -253,16 +119,40 @@
             } else {
                 echo "Error retrieving count";
             }
-        ?>
-    </h1>
+        ?>      
+    </p>
+  </div>
+
+  <!-- Out of Stock Products Modal -->
+
+  <div id="outOfStockModal" class="modal">
+    <div class="modal-content">
+        <span class="close" id="closeOutOfStockModal">&times;</span>
+        <h2>Out of Stock Products</h2>
+        <p>Here you can list products that are out of stock.</p>
+        <div style="height: 350px; overflow-y:scroll">
+          <?php
+          $query = "SELECT * FROM products WHERE quantity < 1";
+          $result = mysqli_query($con, $query);
+          if ($result) {
+              while ($row = mysqli_fetch_assoc($result)) {
+                  echo "<center><h3>{$row['name']}</h3></center>";
+              }
+          } else {
+              echo "Error: " . mysqli_error($con);
+          }
+          ?>
+        </div>
+    </div>
+</div>         
+
 </div>
 
-<br>
-
-<div class="lowerInsideTopDash">
-    <h3><i class="fa-solid fa-receipt"></i> Total Sales</h3>
-    <h1 style="color: #950606;">
-        <?php
+<div class="row">
+  <div class="column" style="background-color:#a9a9a9;">
+    <h2>No. of Sales</h2>
+    <p>
+      <?php
         $currentYear = date('Y');
         $currentMonth = date('m'); 
 
@@ -277,14 +167,14 @@
         } else {
             echo "Error retrieving count";
         }
-        ?>
-    </h1>
-</div>
+        ?>        
+    </p>
+  </div>
 
-<div class="lowerInsideTopDash">
-    <h3><i class="fa-solid fa-money-bill-wave"></i> Revenue</h3>
-    <h1 style="color: #950606;">
-        <?php
+  <div class="column" style="background-color:#808080;">
+    <h2>Revenue</h2>
+    <p>
+      <?php
             $currentMonth = date('m'); 
             $currentYear = date('Y');  
 
@@ -299,14 +189,14 @@
             } else {
                 echo "Error retrieving revenue data";
             }
-        ?>
-    </h1>
-</div>
+        ?>      
+    </p>
+  </div>
 
-<div class="lowerInsideTopDash">
-    <h3><i class="fa-solid fa-money-bill-trend-up"></i> Net Profit</h3>
-    <h1 style="color: #950606;">
-        <?php
+  <div class="column" style="background-color:#696969;">
+    <h2>Net Profit</h2>
+    <p>
+      <?php
             $currentYear = date('Y');
             $currentMonth = date('m');
 
@@ -321,48 +211,23 @@
             } else {
                 echo "Error retrieving count";
             }
-        ?>
-    </h1>
+        ?>          
+    </p>
+  </div>
 </div>
 
-</center>
-
+<!--
+<div class=chart>
+  <h3>
+     Top 5 Best Selling Products
+  </h3>
 </div>
+-->
 
 <div class="charts-card">
     <h2 class="charts-title">Top 5 Best-Selling Products</h2>
     <div id="bar-chart"></div>
 </div>
-
-<br>
-
-<script>
-function openNav() {
-  document.getElementById("mySidenav").style.width = "250px";
-}
-
-function closeNav() {
-  document.getElementById("mySidenav").style.width = "0";
-}
-</script>
-
-<script>
-   function toggleDarkMode() {
-        var element = document.body;
-        element.classList.toggle("dark-mode");
-        if (element.classList.contains("dark-mode")) {
-            localStorage.setItem("dark-mode", "enabled");
-        } else {
-            localStorage.setItem("dark-mode", "disabled");
-        }
-    }
-
-    window.onload = function() {
-        if (localStorage.getItem("dark-mode") === "enabled") {
-            document.body.classList.add("dark-mode");
-        }
-    }
-</script>
 
 <script>
   const xValues = [50,60,70,80,90,100,110,120,130,140,150];
@@ -386,6 +251,8 @@ function closeNav() {
     }
   });
 </script>
+
+<!-- Modal -->
 
 <script>
 function myFunction2() {

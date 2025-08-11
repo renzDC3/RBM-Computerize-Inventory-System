@@ -8,17 +8,17 @@
 
     $query = "
     SELECT 
-        si.*, 
-        p.barcode,
+        eph.*, 
         p.name,
+        p.barcode,
         p.category,
         p.model
     FROM 
-        stock_in si
+        edit_product_history eph
     JOIN 
-        products p ON si.product_id = p.product_id
+        products p ON eph.product_id = p.product_id
     ORDER BY 
-        si.date_time DESC
+        eph.date_time DESC
     ";
     $result = mysqli_query($con,$query);
 ?>
@@ -27,7 +27,7 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="styles/stockInHistoryStyle.css">
+<link rel="stylesheet" href="styles/editHistoryStyle.css">
 </head>
 <body>
 
@@ -47,8 +47,8 @@
 
 <div class="pill-nav">
   <a href="history.php" style="margin: 0px 0px 0px 7px;">Add</a>
-  <a class="active" href="stock_in_history.php">Stock In</a>
-  <a href="edit_history.php">Edit</a>
+  <a href="stock_in_history.php">Stock In</a>
+  <a class="active" href="edit_history.php">Edit</a>
   <a href="adjust_history.php">Adjust</a>
   <a href="delete_history.php">Delete</a>
   <a href="sales_history.php">Sales</a>
@@ -90,31 +90,29 @@
 <div class="productsTable">
   <table id="myTable">
     <tr>
-              <th>Date and Time</th>  
-              <th>Stock-In ID</th>
+              <th>Date and Time</th>
+              <th>Edit Product ID</th>
               <th>Product ID</th>
               <th>Name</th>
               <th>Barcode</th>
               <th>Category</th>
               <th>Model</th>    
-              <th>Quantity</th>
-              <th>Delivery ID</th>
-              <th>User</th>
+              <th>Reason</th>
+              <th>User</th>    
           </tr>
           <?php
               while ($row = mysqli_fetch_assoc($result)) {
           ?>
               <tr>
-                  <td><?php echo $row['date_time']; ?></td>
-                  <td><?php echo $row['stock_in_id']; ?></td>
-                  <td><?php echo $row['product_id']; ?></td>
-                  <td><?php echo $row['name']; ?></td>
-                  <td><?php echo $row['barcode']; // Use the barcode text here ?></td>
-                  <td><?php echo $row['category']; ?></td>
-                  <td><?php echo $row['model']; ?></td>    
-                  <td><?php echo $row['qty']; ?></td>                 
-                  <td><?php echo $row['delivery_id']; ?></td>
-                  <td><?php echo $row['Id']; ?></td>
+                <td><?php echo $row['date_time']; ?></td>
+                <td><?php echo $row['edit_product_history_id']; ?></td>
+                <td><?php echo $row['product_id']; ?></td>
+                <td><?php echo $row['name']; ?></td>
+                <td><?php echo $row['barcode']; // Use the barcode text here ?></td>
+                <td><?php echo $row['category']; ?></td>
+                <td><?php echo $row['model']; ?></td>      
+                <td><?php echo $row['reason']; ?></td>
+                <td><?php echo $row['Id']; ?></td>     
               </tr>
           <?php
               }

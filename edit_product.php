@@ -64,7 +64,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $history_stmt->close();
             }
 
-            header("Location: inventory_list.php");
+            header("Location: products.php");
             exit();
         } else {
             echo "Error updating product: " . $update_stmt->error;

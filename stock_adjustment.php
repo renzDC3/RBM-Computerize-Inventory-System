@@ -19,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $update_stmt->bind_param("ii", $qty, $product_id);
 
         if ($update_stmt->execute()) {
-            header("Location: inventory_list.php");
+            header("Location: products.php");
             exit();
         } else {
             echo "Error updating product quantity: " . $update_stmt->error;

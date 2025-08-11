@@ -36,15 +36,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit;
     }
 
-    $sql = "INSERT INTO products (name, availability, barcode, category, quantity, price, model) VALUES (?, ?, ?, ?, ?, ?, ?)";
-    $availability = $quantity > 0 ? 1 : 0;
+    $sql = "INSERT INTO products (name, barcode, category, quantity, price, model) VALUES (?, ?, ?, ?, ?, ?)";
 
     if ($stmt = mysqli_prepare($con, $sql)) {
         // Check if model is NULL and adjust the binding type accordingly
         if ($model === NULL) {
-            mysqli_stmt_bind_param($stmt, "siissd", $name, $availability, $barcode, $category, $quantity, $price);
+            mysqli_stmt_bind_param($stmt, "siissd", $name, $barcode, $category, $quantity, $price);
         } else {
-            mysqli_stmt_bind_param($stmt, "siissds", $name, $availability, $barcode, $category, $quantity, $price, $model);
+            mysqli_stmt_bind_param($stmt, "sssids", $name, $barcode, $category, $quantity, $price, $model);
         }
 
         if (mysqli_stmt_execute($stmt)) {
@@ -56,7 +55,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             if ($history_stmt = mysqli_prepare($con, $history_sql)) {
                 if ($model === NULL) {
-                    mysqli_stmt_bind_param($history_stmt, "iisdssss", $product_id, $user_id, $name, $barcode, $category, $quantity, $price, $formattedDateTime);
+                    mysqli_stmt_bind_param($history_stmt, "iissids", $product_id, $user_id, $name, $barcode, $category, $quantity, $price, $formattedDateTime);
                 } else {
                     mysqli_stmt_bind_param($history_stmt, "iisdsssss", $product_id, $user_id, $name, $barcode, $category, $quantity, $price, $model, $formattedDateTime);
                 }
@@ -70,10 +69,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 echo "Error preparing history statement: " . mysqli_error($con);
             }
 
-            echo "Success: Product added successfully.";
+            echo "<script>
+                alert('Success: Product added successfully.');
+                window.location.href = 'products.php';
+            </script>";
             mysqli_stmt_close($stmt);
             mysqli_close($con);
             exit;
+
         } else {
             echo "Error inserting product: " . mysqli_error($con);
         }
