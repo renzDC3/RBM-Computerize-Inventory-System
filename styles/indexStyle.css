@@ -15,6 +15,22 @@ form {
   width: 30%;
   margin: 0 auto; 
 }
+.login_error_message {
+    color: #ff8080 !important; 
+ 
+    width: 70%;               /* Darker red text */
+    border: 0.1px solid  #ff8080;       /* Border to match theme */
+    padding: 10px 15px;              /* Inner spacing */
+    margin: 0% auto;                  /* Space from other elements */
+    border-radius: 6px;              /* Rounded edges */
+    font-size: 14px;
+    font-family: Arial, sans-serif;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+
+
 
 h1 {
   margin-top: 40px;

@@ -29,6 +29,9 @@
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="styles/salesStyle.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap" rel="stylesheet">
+
 </head>
 <body>
 
@@ -48,15 +51,16 @@
 
 <!-- Checkout Section -->
 <div class="checkout">
-    <h3>Scan</h3>
+    <h3><i class="fa-solid fa-qrcode" style="font-size:24px;"></i> Scan</h3>
     <input type="text" id="barcode" placeholder="Scan barcode here" autofocus autocomplete="off">
     <hr>
-    <div id="product-list" style="height: 60%; overflow-y:scroll; padding: 5px"></div>
-    <div id="total">
+    <div id="product-list" style="height: 54%; overflow-y:scroll; padding: 5px"></div>
+    <div id="total">    
         <h3>Total: ₱ <span id="total-amount">0.00</span></h3>
-    </div>
+    
     <input type="number" id="customer-cash" placeholder="Enter cash amount" step="0.01" min="0">
     <button id="submit-btn">Submit</button>
+    </div>
 </div>
 
 <script>

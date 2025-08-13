@@ -1,6 +1,8 @@
 body {
   margin: 0;
   font-family: Arial, Helvetica, sans-serif;
+  background: linear-gradient(180deg, #a19999 0%, #1b1b1b 60%) no-repeat center center fixed;
+  background-size: cover;
 }
 
 .topnav {
@@ -18,11 +20,16 @@ body {
   padding: 17px 16px;
   text-decoration: none;
   font-size: 17px;
+  font-family: 'Poppins', sans-serif; /* Cool, modern font */
+  letter-spacing: 1px; /* Slight spacing for style */
+  transition: transform 0.3s ease, background-color 0.3s ease, color 0.3s ease;
 }
+
 
 .topnav a:hover {
   background-color: #ddd;
   color: black;
+  transform: scale(1.1); /* Slight zoom */
 }
 
 .topnav a.active {
@@ -43,22 +50,64 @@ body {
   box-sizing: border-box;
 }
 
-.checkout{
-  background-color: #880808;
+.checkout {
+  background: linear-gradient(180deg, #aa0e0e 0%, #770606 100%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4), inset 0 2px 4px rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
   width: 50%;
-  margin: auto;
-  color: white;
-  padding: 5px 12px 0px 12px;
+  margin: 25px auto;
+  color: #fff;
+  padding: 15px 20px;
   height: 470px;
-  
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
+
+.checkout:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5), inset 0 2px 6px rgba(255, 255, 255, 0.15);
+}
+
 
 .checkout input[type=text]{
   width: 100%;
 }
 
+
 .product-list{
   background-color: white;
   height: 100px;
   overflow-y: scroll;
+}
+
+#barcode {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  box-shadow: #301313 3px 3px 5px;
+}
+
+#total {
+  padding: 10px 15px;
+  border-radius: 15px;
+  background: linear-gradient(180deg, #332f23 0%, #746945 100%);
+  color: #ffffff;
+  font-weight: bold;
+  font-size: 1.2rem;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4), inset 0 2px 4px rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  letter-spacing: 1px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+
+
+#total:hover {
+  transform: scale(1.03);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5), inset 0 3px 6px rgba(255, 255, 255, 0.3);
 }

@@ -16,7 +16,7 @@ if (isset($_POST['submit'])) {
         header("Location: dashboard.php");
         exit();
     } else {
-        $error_message = "Wrong Username or Password!";
+        $error_message = "Your username or password may be incorrect!";
     }
 }
 ?>
@@ -39,12 +39,13 @@ if (isset($_POST['submit'])) {
     
   </div>
 
-  <?php if (isset($error_message)): ?>
+
+    <h1>sign in</h1>
+      <?php if (isset($error_message)): ?>
     <div class="login_error_message">
         <?php echo $error_message; ?>
     </div>
   <?php endif; ?>
-    <h1>sign in</h1>
   <div class="container">
   <div class="input-group">
     <input type="text" name="username" placeholder=" " required>
