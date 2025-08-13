@@ -40,11 +40,6 @@
   <a class="logout" href="logout.php">Logout</a>
 </div>
 
-<div style="padding-left:16px">
-  <h2>History</h2>
-  <p>Come see......</p>
-</div>
-
 <div class="pill-nav">
   <a href="history.php" style="margin: 0px 0px 0px 7px;">Add</a>
   <a href="stock_in_history.php">Stock In</a>

@@ -34,16 +34,19 @@
 
 <div class="topnav">
   <a class="image"><img src="images/rbm_tex.jpg" style="width: 50px; height: 15px"></a>
-  <a href="dashboard.php">Dashboard</a>
-  <a href="products.php">Products</a>
-  <a class="active" href="#contact">Sales</a>
-  <a href="history.php">History</a>
+  <?php 
+      if ($_SESSION['valid'] === 'Admin') { 
+  ?>
+      <a href="dashboard.php">Dashboard</a>
+      <a href="products.php">Products</a>
+  <?php } ?>
+  <a class="active" href="sales.php">Sales</a>
+  <?php 
+      if ($_SESSION['valid'] === 'Admin') { 
+  ?>
+      <a href="history.php">History</a>
+  <?php } ?>
   <a class="logout" href="logout.php">Logout</a>
-</div>
-
-<div style="padding-left:16px">
-  <h2>Sales</h2>
-  <p>Come see......</p>
 </div>
 
 <!-- Checkout Section -->
@@ -51,7 +54,7 @@
     <h3>Scan</h3>
     <input type="text" id="barcode" placeholder="Scan barcode here" autofocus autocomplete="off">
     <hr>
-    <div id="product-list" style="height: 60%; overflow-y:scroll; padding: 5px"></div>
+    <div id="product-list" style="height: 67%; overflow-y:scroll; padding: 5px"></div>
     <div id="total">
         <h3>Total: ₱ <span id="total-amount">0.00</span></h3>
     </div>

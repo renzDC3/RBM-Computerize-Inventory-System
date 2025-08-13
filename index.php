@@ -13,8 +13,13 @@ if (isset($_POST['submit'])) {
         $_SESSION['valid'] = $row['Username'];
         $_SESSION['id'] = $row['Id'];
 
-        header("Location: dashboard.php");
+        if ($row['Username'] === 'Worker1') {
+            header("Location: sales.php");
+        } else {
+            header("Location: dashboard.php");
+        }
         exit();
+        
     } else {
         $error_message = "Wrong Username or Password!";
     }

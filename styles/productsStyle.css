@@ -76,7 +76,7 @@ form.example::after {
 
 .searchbar{
     display:flex;
-    background-color: #880808;
+    background-color: #36454F;
     color:white;
 }
 
@@ -103,7 +103,7 @@ form.example::after {
 
 .productsTable{
     background-color: white;
-    height: 435px;
+    height: 535px;
     overflow-y:scroll;
 }
 

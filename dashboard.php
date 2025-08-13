@@ -19,14 +19,17 @@
   <a class="image"><img src="images/rbm_tex.jpg" style="width: 50px; height: 15px"></a>
   <a class="active" href="#home">Dashboard</a>
   <a href="products.php">Products</a>
-  <a href="sales.php">Sales</a>
+  <?php 
+      if ($_SESSION['valid'] === 'Admin') { 
+  ?>
+      <a href="sales.php">Sales</a>
+  <?php } ?>
   <a href="history.php">History</a>
   <a class="logout" href="logout.php">Logout</a>
 </div>
 
 <div style="padding-left:16px">
-  <h2>Monthly Stats</h2>
-  <p>Come see......</p>
+  <h1>Monthly Stats</h1>
 </div>
 
 <div class="row">

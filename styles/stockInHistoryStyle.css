@@ -45,7 +45,7 @@ body {
 
 .productsTable{
     background-color: white;
-    height: 390px;
+    height: 490px;
     overflow-y:scroll;
 }
 
@@ -131,7 +131,7 @@ form.example::after {
 
 .searchbar{
     display:flex;
-    background-color: #880808;
+    background-color: #36454F;
     color:white;
 }
 

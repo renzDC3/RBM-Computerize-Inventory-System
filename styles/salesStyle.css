@@ -44,12 +44,13 @@ body {
 }
 
 .checkout{
-  background-color: #880808;
+  background-color: #36454F;
   width: 50%;
   margin: auto;
   color: white;
   padding: 5px 12px 0px 12px;
-  height: 470px;
+  height: 570px;
+  margin-top: 10px;
   
 }
 
