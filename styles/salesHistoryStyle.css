@@ -20,15 +20,11 @@ body {
   padding: 17px 16px;
   text-decoration: none;
   font-size: 17px;
-  font-family: 'Poppins', sans-serif; /* Cool, modern font */
-  letter-spacing: 1px; /* Slight spacing for style */
-  transition: transform 0.3s ease, background-color 0.3s ease, color 0.3s ease;
 }
 
 .topnav a:hover {
   background-color: #ddd;
   color: black;
-  transform: scale(1.1); /* Slight zoom */
 }
 
 .topnav a.active {
@@ -59,6 +55,14 @@ body {
   width: 100%;
   border: 1px solid #ddd;
   background-color: white; 
+}
+
+.productsTable button {
+  font-size: medium;
+  cursor: pointer;
+  background-color: #880808;;
+  color: white;
+  border-radius: 5px;
 }
 
 th, td {
@@ -135,7 +139,7 @@ form.example::after {
 
 .searchbar{
     display:flex;
-    background-color: #36454F;
+    background-color: #880808;
     color:white;
 }
 
@@ -147,6 +151,14 @@ form.example::after {
   margin-top: 12.99px;
   margin-left: 10px;
   font-size: medium;
+}
+
+.searchbar button {
+  font-size: medium;
+  cursor: pointer;
+  background-color: #222222;
+  color: white;
+  border-radius: 5px;
 }
 
 .searchbar select {

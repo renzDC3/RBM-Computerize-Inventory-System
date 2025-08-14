@@ -18,15 +18,11 @@ body {
   padding: 17px 16px;
   text-decoration: none;
   font-size: 17px;
-  font-family: 'Poppins', sans-serif; /* Cool, modern font */
-  letter-spacing: 1px; /* Slight spacing for style */
-  transition: transform 0.3s ease, background-color 0.3s ease, color 0.3s ease;
 }
 
 .topnav a:hover {
   background-color: #ddd;
   color: black;
-  transform: scale(1.1); /* Slight zoom */
 }
 
 .topnav a.active {
@@ -116,7 +112,7 @@ body {
 */
 
 .charts-card {
-  background-color: #36454F;
+  background-color: #880808;
   padding: 25px;
   box-sizing: border-box;
   -webkit-column-break-inside: avoid;

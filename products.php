@@ -15,7 +15,6 @@
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="styles/productsStyle.css">
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap" rel="stylesheet">
 </head>
 <body>
 
@@ -93,7 +92,7 @@
               <div><label for="quantity"><b>Initial Quantity</b></label></div>
                 <div><input type="number" min="0" max="1000" placeholder="Enter Quantity" name="quantity" required ></div>
 
-                <div><label for="price" style="margin-left: 56px"><b>Price</b></label></div>
+                <div><label for="price"><b>Price</b></label></div>
                 <div><input type="number" min="1.00" max="999999.99" value="1.00" placeholder="Enter Product Price" name="price" required></div>
             </div>
             <br>

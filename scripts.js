@@ -21,7 +21,7 @@ fetch('top_products.php') // Update with the correct path
                     show: false,
                 },
             },
-            colors: ['#d50000', '#2962ff', '#583cb3', '#ff6d00', '#2e7d32'],
+            colors: ['#FF0000', '#2962ff', '#583cb3', '#ff6d00', '#2e7d32'],
             plotOptions: {
                 bar: {
                     distributed: true,

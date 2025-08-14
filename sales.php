@@ -29,9 +29,6 @@
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="styles/salesStyle.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap" rel="stylesheet">
-
 </head>
 <body>
 
@@ -54,16 +51,15 @@
 
 <!-- Checkout Section -->
 <div class="checkout">
-    <h3><i class="fa-solid fa-qrcode" style="font-size:24px;"></i> Scan</h3>
+    <h3>Scan</h3>
     <input type="text" id="barcode" placeholder="Scan barcode here" autofocus autocomplete="off">
     <hr>
     <div id="product-list" style="height: 67%; overflow-y:scroll; padding: 5px"></div>
     <div id="total">
         <h3>Total: ₱ <span id="total-amount">0.00</span></h3>
-    
+    </div>
     <input type="number" id="customer-cash" placeholder="Enter cash amount" step="0.01" min="0">
     <button id="submit-btn">Submit</button>
-    </div>
 </div>
 
 <script>
@@ -151,7 +147,7 @@
 
     function updateProductList() {
         const productListDiv = document.getElementById('product-list');
-        productListDiv.innerHTML = ''; // Clear the list
+        productListDiv.innerHTML = '';
 
         for (const barcode in productList) {
             const { name, price, quantity } = productList[barcode];
@@ -160,12 +156,18 @@
             const productElement = document.createElement('div');
             productElement.className = 'product';
             productElement.innerHTML = `
-                <table style="                
-                  font-size: small;
-                ">
+                <table style="font-size: small;">
                     <tr>
-                        <td style="width: 70%"><h3>${name} (x${quantity})</h3></td>
-                        <td style="width: 20%"><h3>₱ ${subtotal}</h3></td>
+                        <td style="width: 50%"><h3>${name}</h3></td>
+                        <td style="width: 15%">
+                            <input type="number" 
+                                min="1" 
+                                value="${quantity}" 
+                                style="width: 60px;" 
+                                onchange="setProductQuantity('${barcode}', this.value)">
+                        </td>
+                        <td style="width: 15%"><h3>₱ ${subtotal}</h3></td>
+                        <td><button class="button" onclick="incrementProduct('${barcode}')">+</button></td>
                         <td><button class="button" onclick="decrementProduct('${barcode}')">-</button></td>
                         <td><button class="button" onclick="removeProduct('${barcode}')">Remove</button></td>
                     </tr>
@@ -175,11 +177,29 @@
         }
     }
 
+
     function updateTotal() {
         totalAmount = Object.values(productList).reduce((total, product) => {
             return total + (product.price * product.quantity);
         }, 0);
         totalAmountDisplay.textContent = totalAmount.toFixed(2);
+    }
+
+    function setProductQuantity(barcode, qty) {
+        const quantity = parseInt(qty, 10);
+        if (isNaN(quantity) || quantity < 1) {
+            alert("Quantity must be at least 1.");
+            return;
+        }
+        productList[barcode].quantity = quantity;
+        updateProductList();
+        updateTotal();
+    }
+
+    function incrementProduct(barcode) {
+        productList[barcode].quantity++;
+        updateProductList();
+        updateTotal();
     }
 
     function decrementProduct(barcode) {

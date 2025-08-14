@@ -20,15 +20,11 @@ body {
   padding: 17px 16px;
   text-decoration: none;
   font-size: 17px;
-  font-family: 'Poppins', sans-serif; /* Cool, modern font */
-  letter-spacing: 1px; /* Slight spacing for style */
-  transition: transform 0.3s ease, background-color 0.3s ease, color 0.3s ease;
 }
 
 .topnav a:hover {
   background-color: #ddd;
   color: black;
-  transform: scale(1.1); /* Slight zoom */
 }
 
 .topnav a.active {
@@ -135,7 +131,7 @@ form.example::after {
 
 .searchbar{
     display:flex;
-    background-color: #36454F;
+    background-color: #880808;
     color:white;
 }
 
@@ -165,6 +161,14 @@ form.example::after {
 
 .form-inline input[type=date]{
   margin-right: 10px;
+}
+
+.form-inline button{
+  font-size: medium;
+  cursor: pointer;
+  background-color: #222222;
+  color: white;
+  border-radius: 5px;
 }
 
 

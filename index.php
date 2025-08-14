@@ -21,7 +21,7 @@ if (isset($_POST['submit'])) {
         exit();
         
     } else {
-        $error_message = "Your username or password may be incorrect!";
+        $error_message = "Wrong Username or Password!";
     }
 }
 ?>
@@ -35,39 +35,31 @@ if (isset($_POST['submit'])) {
 </head>
 <body>
 
+<h2>Inventory Management System</h2>
 
 <form action="" method="post">
   <div class="imgcontainer">
-        <h2 class='textSignin'>Inventory System</h2>
-
-    <img src="images/rbm_logo.png" alt="Avatar" class="avatar">
-    
+    <img src="images/rbm_logo.jpg" alt="Avatar" class="avatar">
   </div>
 
-
-    <h1>sign in</h1>
-      <?php if (isset($error_message)): ?>
+  <?php if (isset($error_message)): ?>
     <div class="login_error_message">
         <?php echo $error_message; ?>
     </div>
   <?php endif; ?>
+
   <div class="container">
-  <div class="input-group">
-    <input type="text" name="username" placeholder=" " required>
-    <label>USERNAME</label>
-  </div>
+    <label for="uname"><b>Username</b></label>
+    <input type="text" name="username" placeholder="Username" required>
 
-  <div class="input-group">
-    <input type="password" name="password" placeholder=" " required>
-    <label>PASSWORD</label>
+    <label for="psw"><b>Password</b></label>
+    <input type="password" name="password" placeholder="Password" required>
+        
+    <button type="submit" name="submit" value="Login">Login</button>
+    
   </div>
-
-  <button type="submit" name="submit" value="Login">
-<span style="font-size:25px;">&#10149;</span></button>
-</div>
 
 </form>
-
 
 </body>
 </html>
