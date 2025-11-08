@@ -41,6 +41,44 @@ body {
     float:right;
 }
 
+/* Hide the icon by default */
+.topnav .icon {
+  display: none;
+}
+
+/* Responsive breakpoint */
+@media screen and (max-width: 768px) {
+  .topnav a:not(:first-child) {
+    display: none;
+  }
+
+  .topnav a.icon {
+    float: right;
+    display: block;
+  }
+
+  .topnav.responsive {
+    position: relative;
+  }
+
+  .topnav.responsive a.icon {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+
+  .topnav.responsive a {
+    float: none;
+    display: block;
+    text-align: left;
+  }
+
+  .topnav.responsive a.logout {
+    float: none;
+  }
+}
+
+
 /* Filtering */
 
 form.example input[type=text] {
@@ -88,6 +126,7 @@ form.example::after {
 .searchbar input[type=text] {
   margin-top: 12.99px;
   margin-left: 10px;
+  width: 110px;
   font-size: medium;
 }
 
@@ -100,11 +139,98 @@ form.example::after {
     padding-left:16px;
 }
 
+.addProduct {
+  margin-top: 12.9px;
+  margin-left: 16px;
+  font-size: medium;
+  cursor: pointer;
+  background-color: #222222;
+  color: white;
+  border-radius: 5px;
+}
+
+/* Responsive breakpoint */
+@media screen and (max-width: 768px) {
+  .searchbar{
+    display:block;  
+  }
+  .searchbar p {
+    padding-left:15px
+  }
+  .searchbar input[type=text] {
+    margin-top: -10px;
+    margin-left: 15px;
+    font-size: medium;
+    width: 110px;
+  }
+  .searchbar select {
+      margin-top: 0px;
+      font-size: medium;
+  }
+  .category{
+      padding-left:15px;
+  }
+  .addProduct {
+    margin-top: 15px;
+    margin-bottom: 15px;
+    margin-left: 15px;
+    font-size: medium;
+    cursor: pointer;
+    background-color: #222222;
+    color: white;
+    border-radius: 5px;
+  }
+  .searchbar div{
+    margin: -5px -5px -5px -5px;
+  }
+}
+
+/* Hide toggle button on desktop */
+.dropdown-toggle {
+  display: none;
+}
+
+/* Responsive: show dropdown button on small screens */
+@media screen and (max-width: 768px) {
+  .dropdown-toggle {
+    display: block;
+    width: 100%;
+    background-color: #880808;
+    color: white;
+    font-size: 18px;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+  }
+
+  .dropdown-toggle:hover {
+    background-color: #a00a0a;
+  }
+
+  /* Hide searchbar by default on mobile */
+  .searchbar {
+    display: none;
+    background-color: #880808;
+    padding: 10px 0;
+  }
+
+  /* When toggled open */
+  .searchbar.show {
+    display: block;
+  }
+}
+
+
 /* Table */
+
+.productsTableHeader{
+    background-color: white;
+}
 
 .productsTable{
     background-color: white;
-    height: 535px;
+    height: 510px;
     overflow-y:scroll;
 }
 
@@ -125,23 +251,29 @@ tr:nth-child(even) {
   background-color: #f2f2f2;
 }
 
-.addProduct {
-  margin-top: 12.9px;
-  margin-left: 16px;
-  font-size: medium;
-  cursor: pointer;
-  background-color: #222222;
-  color: white;
-  border-radius: 5px;
-}
-
 .productsTable button {
-  font-size: medium;
+  font-size: small;
   cursor: pointer;
   background-color: #880808;
   color: white;
   border-radius: 5px;
+  display: flex;
+  padding: 5px;
   
+}
+
+/* Responsive breakpoint */
+@media screen and (max-width: 768px) {
+  th, td {
+    text-align: left;
+    padding: 5px;
+  }
+
+  .productsTable{
+    background-color: white;
+    height: 700px;
+    overflow-y:scroll;
+  }
 }
 
 /* General Modal Style */
@@ -169,6 +301,7 @@ tr:nth-child(even) {
   border: 1px solid #888;
   width: 80%;
   color: black;
+  text-align: left;
 }
 
 /* The Close Button */
@@ -178,7 +311,6 @@ tr:nth-child(even) {
   font-size: 28px;
   font-weight: bold;
 }
-
 .close:hover,
 .close:focus {
   color: #000;
@@ -196,10 +328,7 @@ tr:nth-child(even) {
 .modalHorizontal input[type=text], .modalHorizontal input[type=number], .modalHorizontal select{
   margin: -3px 12px;
   font-size: medium;
-}
-
-.modalHorizontal input[type=number] {
-  width: 127px;
+  width: 150px;
 }
 
 .modalHorizontal select{
@@ -210,10 +339,43 @@ tr:nth-child(even) {
   margin-top: 10px;
 }
 
-.confirmOrCancel button {
+.modal button {
   font-size: medium;
   cursor: pointer;
   background-color: #222222;
   color: white;
   border-radius: 5px;
+  display: inline;
+  padding: 5px;
+}
+
+/* Responsive breakpoint */
+@media screen and (max-width: 768px) {
+  .modalHorizontal {
+    display:block;
+  }
+
+  .modalHorizontal input[type=text], .modalHorizontal input[type=number], .modalHorizontal select{
+    margin: 15px;
+    font-size: medium;
+    width: 150px;
+  }
+s
+  .modalHorizontal select{
+    margin-right: 16px;
+  }
+
+  .confirmOrCancel {
+    margin-top: 10px;
+  }
+
+  .modal button {
+    font-size: medium;
+    cursor: pointer;
+    background-color: #222222;
+    color: white;
+    border-radius: 5px;
+    display: inline;
+    padding: 5px;
+  }
 }

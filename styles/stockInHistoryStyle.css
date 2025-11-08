@@ -41,6 +41,43 @@ body {
     float:right;
 }
 
+/* Hide the icon by default */
+.topnav .icon {
+  display: none;
+}
+
+/* Responsive breakpoint */
+@media screen and (max-width: 768px) {
+  .topnav a:not(:first-child) {
+    display: none;
+  }
+
+  .topnav a.icon {
+    float: right;
+    display: block;
+  }
+
+  .topnav.responsive {
+    position: relative;
+  }
+
+  .topnav.responsive a.icon {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+
+  .topnav.responsive a {
+    float: none;
+    display: block;
+    text-align: left;
+  }
+
+  .topnav.responsive a.logout {
+    float: none;
+  }
+}
+
 /* Table */
 
 .productsTable{
@@ -64,6 +101,16 @@ th, td {
 
 tr:nth-child(even) {
   background-color: #f2f2f2;
+}
+
+/* Responsive breakpoint */
+@media screen and (max-width: 768px) {
+  .productsTable{
+    height: 650px;
+  }
+  th, td {
+    padding: 5px;
+  }
 }
 
 /* Pill Navigation */
@@ -145,14 +192,6 @@ form.example::after {
   font-size: medium;
 }
 
-.searchbar button {
-  font-size: medium;
-  cursor: pointer;
-  background-color: #222222;
-  color: white;
-  border-radius: 5px;
-}
-
 .searchbar select {
     margin-top: 15px;
     font-size: medium;
@@ -164,11 +203,103 @@ form.example::after {
 
 .form-inline {
   margin-top: 15px;
-  margin-left: 15px;
+  margin-left: 20px;
+  display:flex;
 }
 
 .form-inline input[type=date]{
   margin-right: 10px;
+  
 }
+
+.form-inline button{
+  font-size: medium;
+  cursor: pointer;
+  background-color: #222222;
+  color: white;
+  border-radius: 5px;
+}
+
+/* Responsive breakpoint */
+@media screen and (max-width: 768px) {
+  .searchbar{
+    display:block;  
+  }
+  .searchbar p {
+    padding-left:15px
+  }
+  .searchbar input[type=text] {
+    margin-top: -10px;
+    margin-left: 15px;
+    font-size: medium;
+    width: 110px;
+  }
+  .searchbar select {
+      margin-top: 0px;
+      font-size: medium;
+  }
+  .category{
+      padding-left:15px;
+  }
+  .searchbar div{
+    margin: -5px -5px -5px -5px;
+  }
+  .form-inline{
+    display:block;
+  }
+  .form-inline input[type=date]{
+    margin-top: 15px;
+    margin-right: 10px;
+  }
+  .searchbar label{
+    margin-top: 15px;
+  }
+
+  .searchbar input[type=date] {
+    margin-bottom: 15px;
+    font-size: medium;
+  }
+
+  .form-inline button{
+    margin-bottom: 10px;
+  }
+}
+
+/* Hide toggle button on desktop */
+.dropdown-toggle {
+  display: none;
+}
+
+/* Responsive: show dropdown button on small screens */
+@media screen and (max-width: 768px) {
+  .dropdown-toggle {
+    display: block;
+    width: 100%;
+    background-color: #880808;
+    color: white;
+    font-size: 18px;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+  }
+
+  .dropdown-toggle:hover {
+    background-color: #a00a0a;
+  }
+
+  /* Hide searchbar by default on mobile */
+  .searchbar {
+    display: none;
+    background-color: #880808;
+    padding: 10px 0;
+  }
+
+  /* When toggled open */
+  .searchbar.show {
+    display: block;
+  }
+}
+
 
 

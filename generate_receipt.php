@@ -1,5 +1,6 @@
 <?php
-include("config.php");
+require_once 'session_config.php'; 
+require 'config.php';
 
 $order_id = $_GET['order_id'];
 
@@ -15,12 +16,14 @@ $pdf_content .= "1 0 obj\n";
 $pdf_content .= "<< /Type /Catalog /Pages 2 0 R >>\n";
 $pdf_content .= "endobj\n";
 
+// Page tree with updated width (227 points ≈ 3.15 inches)
 $pdf_content .= "2 0 obj\n";
-$pdf_content .= "<< /Type /Pages /MediaBox [0 0 595 842] /Kids [3 0 R] /Count 1 >>\n";
+$pdf_content .= "<< /Type /Pages /MediaBox [0 0 227 842] /Kids [3 0 R] /Count 1 >>\n";
 $pdf_content .= "endobj\n";
 
+// Individual page with updated width
 $pdf_content .= "3 0 obj\n";
-$pdf_content .= "<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Contents 4 0 R /Resources << >> >>\n";
+$pdf_content .= "<< /Type /Page /Parent 2 0 R /MediaBox [0 0 227 842] /Contents 4 0 R /Resources << >> >>\n";
 $pdf_content .= "endobj\n";
 
 $pdf_text = ""; 
@@ -29,36 +32,36 @@ $pdf_content .= "4 0 obj\n";
 $pdf_content .= "<< /Length 5 0 R >>\n"; 
 $pdf_content .= "stream\n";
 
-$pdf_text .= "\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tRBM MOTORPARTS SHOP\n\n";
-$pdf_text .= "Address: Evangelista Street, Bagong Barrio, Caloocan City\n\n";
+$pdf_text .= "         RBM MOTORPARTS SHOP\n\n";
+$pdf_text .= "Address: Evangelista Street, Bagong \nBarrio, Caloocan City\n\n";
 $pdf_text .= "Tele: 0000-111-2222\n\n";
-$pdf_text .= "*******************************************************************\n\n";
-$pdf_text .= "\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tCASH RECEIPT\n\n";
-$pdf_text .= "*******************************************************************\n\n";
+$pdf_text .= "*********************************************\n\n";
+$pdf_text .= "                 SALES INVOICE\n\n";
+$pdf_text .= "*********************************************\n\n";
 
 while ($detail = mysqli_fetch_assoc($order_details_result)) {
-    $pdf_text .= "Product Name: " . $detail['product_name'] . "\n\n";
-    $pdf_text .= "Quantity: " . $detail['quantity'] . "\n\n";
-    $pdf_text .= "Price: " . $detail['price'] . "\n\n";
-    $pdf_text .= "Subtotal: " . $detail['subtotal'] . "\n\n\n";
+    $pdf_text .= "Product Name: " . $detail['product_name'] . "\n";
+    $pdf_text .= "Quantity: " . $detail['quantity'] . "\n";
+    $pdf_text .= "Price: " . $detail['price'] . "\n";
+    $pdf_text .= "Subtotal: " . $detail['subtotal'] . "\n\n";
 }
 
-$pdf_text .= "*******************************************************************\n\n";
-$pdf_text .= "Total: " . $order['orders_total'] . "\n\n";
-$pdf_text .= "Cash: " . $order['orders_cash'] . "\n\n";
-$pdf_text .= "Change: " . $order['orders_change'] . "\n\n\n";
+$pdf_text .= "*********************************************\n";
+$pdf_text .= "Total: " . $order['orders_total'] . "\n";
+$pdf_text .= "Cash: " . $order['orders_cash'] . "\n";
+$pdf_text .= "Change: " . $order['orders_change'] . "\n\n";
 $pdf_text .= "Date/Time: " . $order['order_date'] . "\n";
 
 $length = strlen($pdf_text);
 $pdf_content .= "5 0 R " . $length . "\n";
 
 $pdf_content .= "BT\n"; 
-$pdf_content .= "/F1 18 Tf\n"; 
-$pdf_content .= "72 800 Td\n"; 
+$pdf_content .= "/F1 12 Tf\n"; // smaller font may fit better for narrow width
+$pdf_content .= "10 800 Td\n"; 
 
 foreach (explode("\n", $pdf_text) as $line) {
     $pdf_content .= "($line) Tj\n"; 
-    $pdf_content .= "0 -15 Td\n"; 
+    $pdf_content .= "0 -14 Td\n"; 
 }
 
 $pdf_content .= "ET\n"; 

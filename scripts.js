@@ -51,7 +51,7 @@ fetch('top_products.php') // Update with the correct path
             },
             legend: {
                 labels: {
-                    colors: '#f5f7ff',
+                    colors: 'black',
                 },
                 show: true,
                 position: 'top',
@@ -70,7 +70,7 @@ fetch('top_products.php') // Update with the correct path
                 categories: productNames,
                 title: {
                     style: {
-                        color: '#f5f7ff',
+                        color: 'black',
                     },
                 },
                 axisBorder: {
@@ -83,7 +83,7 @@ fetch('top_products.php') // Update with the correct path
                 },
                 labels: {
                     style: {
-                        colors: '#f5f7ff',
+                        colors: 'black',
                     },
                 },
             },
@@ -91,7 +91,7 @@ fetch('top_products.php') // Update with the correct path
                 title: {
                     text: 'Count',
                     style: {
-                        color: '#f5f7ff',
+                        color: 'black',
                     },
                 },
                 axisBorder: {
@@ -104,7 +104,7 @@ fetch('top_products.php') // Update with the correct path
                 },
                 labels: {
                     style: {
-                        colors: '#f5f7ff',
+                        colors: 'black',
                     },
                 },
             },

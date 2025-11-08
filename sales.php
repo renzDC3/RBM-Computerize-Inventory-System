@@ -1,7 +1,7 @@
 <?php
-    session_start();
-    include("config.php");
-
+    require_once 'session_config.php'; 
+    require_once 'csrf.php';
+    require 'config.php';
     if (!isset($_SESSION['valid'])) {
         header("Location: index.php");
         exit();
@@ -32,26 +32,47 @@
 </head>
 <body>
 
-<div class="topnav">
+<meta name="csrf_token" content="<?php echo htmlspecialchars(generate_csrf_token()); ?>">
+
+<div class="topnav" id="myTopnav">
   <a class="image"><img src="images/rbm_tex.jpg" style="width: 50px; height: 15px"></a>
-  <?php 
-      if ($_SESSION['valid'] === 'Admin') { 
-  ?>
-      <a href="dashboard.php">Dashboard</a>
-      <a href="products.php">Products</a>
+
+  <?php if ($_SESSION['valid'] === 'Admin' or $_SESSION['valid'] === 'Manager') { ?>
+      <a href="dashboard.php">Dashboard</a>           
   <?php } ?>
-  <a class="active" href="sales.php">Sales</a>
-  <?php 
-      if ($_SESSION['valid'] === 'Admin') { 
-  ?>
+
+  <a href="products.php">Products</a>
+
+  <?php if ($_SESSION['valid'] != 'Manager') { ?>
+    <a class="active" href="sales.php">Sales</a>
+    <a href="services.php">Services</a>
+  <?php } ?> 
+
+  <?php if ($_SESSION['valid'] === 'Admin'  or $_SESSION['valid'] === 'Manager') { ?>
       <a href="history.php">History</a>
+      <a href="employees.php">Employees</a>
+      <a href="suppliers.php">Suppliers</a>
+      <a href="report.php">Report</a>
+      <a href="cloud.php">Backup</a>
   <?php } ?>
+
+  <?php if ($_SESSION['valid'] === 'Admin') { ?>
+
+  <a href="system_log.php">System Log</a>
+
+  <?php } ?>
+
   <a class="logout" href="logout.php">Logout</a>
+
+  <!-- Hamburger icon -->
+  <a href="javascript:void(0);" class="icon" onclick="toggleNav()">&#9776;</a>
 </div>
 
 <!-- Checkout Section -->
 <div class="checkout">
     <h3>Scan</h3>
+    <input type="hidden" name="csrf_token" value="<?php echo generate_csrf_token(); ?>">
+
     <input type="text" id="barcode" placeholder="Scan barcode here" autofocus autocomplete="off">
     <hr>
     <div id="product-list" style="height: 67%; overflow-y:scroll; padding: 5px"></div>
@@ -98,12 +119,16 @@
         price: productList[barcode].price.toFixed(2),
     }));
 
+    const csrfToken = document.querySelector('meta[name="csrf_token"]').content;
+
     const orderData = {
+        csrf_token: csrfToken,
         total: totalAmount.toFixed(2),
         cash: customerCash.toFixed(2),
         change: change,
         order_details: orderDetails,
     };
+
 
     try {
         const response = await fetch('submit_order.php', {
@@ -225,7 +250,28 @@
         document.getElementById('customer-cash').value = '';
         document.getElementById('product-list').innerHTML = ''; 
     }
+
+    function myFunction() {
+    var x = document.getElementById("myTopnav");
+    if (x.className === "topnav") {
+        x.className += " responsive";
+    } else {
+        x.className = "topnav";
+    }
+    }
 </script>
+
+<script>
+function toggleNav() {
+  var x = document.getElementById("myTopnav");
+  if (x.className === "topnav") {
+    x.className += " responsive";
+  } else {
+    x.className = "topnav";
+  }
+}
+</script>
+
 
 </body>
 </html>

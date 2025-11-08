@@ -1,16 +1,18 @@
 <?php
-    session_start();
-
-    include("config.php");
+    require_once 'session_config.php'; 
+    require 'config.php';
     if(!isset($_SESSION['valid'])){
         header("Location: index.php");
     }
 
     $query = "
     SELECT 
-        dph.*    
+        dph.*,
+        u.Username    
     FROM 
         delete_product_history dph
+    JOIN 
+        users u ON dph.Id = u.Id
     ORDER BY 
         dph.date_time DESC
     ";
@@ -25,13 +27,38 @@
 </head>
 <body>
 
-<div class="topnav">
+<div class="topnav" id="myTopnav">
   <a class="image"><img src="images/rbm_tex.jpg" style="width: 50px; height: 15px"></a>
-  <a href="dashboard.php">Dashboard</a>
+
+  <?php if ($_SESSION['valid'] === 'Admin' or $_SESSION['valid'] === 'Manager') { ?>
+      <a href="dashboard.php">Dashboard</a>           
+  <?php } ?>
+
   <a href="products.php">Products</a>
-  <a href="sales.php">Sales</a>
-  <a class="active" href="history.php">History</a>
+
+  <?php if ($_SESSION['valid'] != 'Manager') { ?>
+    <a href="sales.php">Sales</a>
+    <a href="services.php">Services</a>
+  <?php } ?> 
+
+  <?php if ($_SESSION['valid'] === 'Admin'  or $_SESSION['valid'] === 'Manager') { ?>
+      <a class="active" href="history.php">History</a>
+      <a href="employees.php">Employees</a>
+      <a href="suppliers.php">Suppliers</a>
+      <a href="report.php">Report</a>
+      <a href="cloud.php">Backup</a>
+  <?php } ?>
+
+  <?php if ($_SESSION['valid'] === 'Admin') { ?>
+
+  <a href="system_log.php">System Log</a>
+
+  <?php } ?>
+
   <a class="logout" href="logout.php">Logout</a>
+
+  <!-- Hamburger icon -->
+  <a href="javascript:void(0);" class="icon" onclick="toggleNav()">&#9776;</a>
 </div>
 
 <div class="pill-nav">
@@ -39,40 +66,45 @@
   <a href="stock_in_history.php">Stock In</a>
   <a href="edit_history.php">Edit</a>
   <a href="adjust_history.php">Adjust</a>
+  <a href="defective_history.php">Defective</a>
   <a class="active" href="delete_history.php">Delete</a>
   <a href="sales_history.php">Sales</a>
+  <a href="services_history.php">Services</a>
 </div>
 
-<div class="searchbar">
-    <div><p> Sort order: </p></div>
-    <div><select name="sort" id="sort" style="margin-left: 15px">
-      <option value="desc">Newest First</option>  
-      <option value="asc">Oldest First</option>
-    
-  </select></div>
-    <div><p>Pick category: </p></div>
-    <div>
-        <form class="category">
-          <select id="category" placeholder="Select Category" name="category" class=selectCategory required style>
-            <option class="placeholder" value="" disabled selected>Category</option>
-            <option value="all">All</option>
-            <option value="Braking System">Braking System</option>
-            <option value="Interior Accessories">Interior Accessories</option>
-            <option value="Engine Component">Engine Components</option>
-            <option value="Lighting">Lighting</option>
-            <option value="Electrical Component">Electrical Components</option>
-            <option value="Tires and Wheels">Tires and Wheels</option>
-          </select>
+<div class="searchbar-container">
+  <button class="dropdown-toggle" onclick="toggleSearchbar()">Filters ▾</button>
+  <div class="searchbar">
+        <div><p> Sort order: </p></div>
+        <div><select name="sort" id="sort" style="margin-left: 15px">
+        <option value="desc">Newest First</option>  
+        <option value="asc">Oldest First</option>
+        
+    </select></div>
+        <div><p>Pick category: </p></div>
+        <div>
+            <form class="category">
+            <select id="category" placeholder="Select Category" name="category" class=selectCategory required style>
+                <option class="placeholder" value="" disabled selected>Category</option>
+                <option value="all">All</option>
+                <option value="Braking System">Braking System</option>
+                <option value="Interior Accessories">Interior Accessories</option>
+                <option value="Engine Component">Engine Components</option>
+                <option value="Lighting">Lighting</option>
+                <option value="Electrical Component">Electrical Components</option>
+                <option value="Tires and Wheels">Tires and Wheels</option>
+            </select>
+            </form>
+        </div>
+        <div>
+        <form class="form-inline" onsubmit="myFunction(); return false;">
+            <div><label for="email">Start:</label></div>
+            <div><input type="date" id="dateStart" placeholder="Start Date" title="Select start date"></div>
+            <div><label for="email">End:</label></div>
+            <div><input type="date" id="dateEnd" placeholder="End Date" title="Select end date"></div>
+            <div><button type="submit">Filter By Date</button></div>
         </form>
-    </div>
-    <div>
-      <form class="form-inline" onsubmit="myFunction(); return false;">
-          <label for="email">Start:</label>
-          <input type="date" id="dateStart" placeholder="Start Date" title="Select start date">
-          <label for="email">End:</label>
-          <input type="date" id="dateEnd" placeholder="End Date" title="Select end date">
-          <button type="submit">Filter By Date</button>
-      </form>
+        </div>
     </div>
 </div>
 
@@ -95,7 +127,7 @@
                                 <td><?php echo $row['category']; ?></td>
                                 <td><?php echo $row['quantity']; ?></td>
                                 <td><?php echo $row['price']; ?></td>
-                                <td><?php echo $row['Id']; ?></td>    
+                                <td><?php echo $row['Username']; ?></td>    
 
                             </tr>
                         <?php endwhile; ?>

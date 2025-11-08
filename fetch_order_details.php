@@ -1,6 +1,6 @@
 <?php
-session_start();
-include("config.php");
+require_once 'session_config.php'; 
+require 'config.php';
 
 if (!isset($_SESSION['valid'])) {
     header("Location: index.php");

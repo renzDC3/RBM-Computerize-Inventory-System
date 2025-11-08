@@ -1,7 +1,6 @@
 <?php
-include("config.php");
-
-session_start();
+require_once 'session_config.php'; 
+require 'config.php';
 
 $order_id = isset($_GET['order_id']) ? $_GET['order_id'] : die("Order ID not provided.");
 

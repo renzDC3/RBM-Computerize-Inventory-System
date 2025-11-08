@@ -1,7 +1,6 @@
 <?php
-    session_start();
-
-    include("config.php");
+    require_once 'session_config.php'; 
+    require 'config.php';
     if(!isset($_SESSION['valid'])){
         header("Location: index.php");
     }
@@ -12,11 +11,14 @@
         p.name,
         p.barcode,
         p.category,
-        p.model
+        p.model,
+        u.Username
     FROM 
         edit_product_history eph
     JOIN 
         products p ON eph.product_id = p.product_id
+    JOIN 
+        users u ON eph.Id = u.Id
     ORDER BY 
         eph.date_time DESC
     ";
@@ -31,13 +33,38 @@
 </head>
 <body>
 
-<div class="topnav">
+<div class="topnav" id="myTopnav">
   <a class="image"><img src="images/rbm_tex.jpg" style="width: 50px; height: 15px"></a>
-  <a href="dashboard.php">Dashboard</a>
+
+  <?php if ($_SESSION['valid'] === 'Admin' or $_SESSION['valid'] === 'Manager') { ?>
+      <a href="dashboard.php">Dashboard</a>           
+  <?php } ?>
+
   <a href="products.php">Products</a>
-  <a href="sales.php">Sales</a>
-  <a class="active" href="history.php">History</a>
+
+  <?php if ($_SESSION['valid'] != 'Manager') { ?>
+    <a href="sales.php">Sales</a>
+    <a href="services.php">Services</a>
+  <?php } ?> 
+
+  <?php if ($_SESSION['valid'] === 'Admin'  or $_SESSION['valid'] === 'Manager') { ?>
+      <a class="active" href="history.php">History</a>
+      <a href="employees.php">Employees</a>
+      <a href="suppliers.php">Suppliers</a>
+      <a href="report.php">Report</a>
+      <a href="cloud.php">Backup</a>
+  <?php } ?>
+
+  <?php if ($_SESSION['valid'] === 'Admin') { ?>
+
+  <a href="system_log.php">System Log</a>
+
+  <?php } ?>  
+
   <a class="logout" href="logout.php">Logout</a>
+
+  <!-- Hamburger icon -->
+  <a href="javascript:void(0);" class="icon" onclick="toggleNav()">&#9776;</a>
 </div>
 
 <div class="pill-nav">
@@ -45,40 +72,45 @@
   <a href="stock_in_history.php">Stock In</a>
   <a class="active" href="edit_history.php">Edit</a>
   <a href="adjust_history.php">Adjust</a>
+  <a href="defective_history.php">Defective</a>
   <a href="delete_history.php">Delete</a>
   <a href="sales_history.php">Sales</a>
+  <a href="services_history.php">Services</a>
 </div>
 
-<div class="searchbar">
-    <div><p> Sort order: </p></div>
-    <div><select name="sort" id="sort" style="margin-left: 15px">
-      <option value="desc">Newest First</option>  
-      <option value="asc">Oldest First</option>
-    
-  </select></div>
-    <div><p>Pick category: </p></div>
-    <div>
-        <form class="category">
-          <select id="category" placeholder="Select Category" name="category" class=selectCategory required style>
-            <option class="placeholder" value="" disabled selected>Category</option>
-            <option value="all">All</option>
-            <option value="Braking System">Braking System</option>
-            <option value="Interior Accessories">Interior Accessories</option>
-            <option value="Engine Component">Engine Components</option>
-            <option value="Lighting">Lighting</option>
-            <option value="Electrical Component">Electrical Components</option>
-            <option value="Tires and Wheels">Tires and Wheels</option>
-          </select>
+<div class="searchbar-container">
+  <button class="dropdown-toggle" onclick="toggleSearchbar()">Filters ▾</button>
+  <div class="searchbar">
+        <div><p> Sort order: </p></div>
+        <div><select name="sort" id="sort" style="margin-left: 15px">
+        <option value="desc">Newest First</option>  
+        <option value="asc">Oldest First</option>
+        
+    </select></div>
+        <div><p>Pick category: </p></div>
+        <div>
+            <form class="category">
+            <select id="category" placeholder="Select Category" name="category" class=selectCategory required style>
+                <option class="placeholder" value="" disabled selected>Category</option>
+                <option value="all">All</option>
+                <option value="Braking System">Braking System</option>
+                <option value="Interior Accessories">Interior Accessories</option>
+                <option value="Engine Component">Engine Components</option>
+                <option value="Lighting">Lighting</option>
+                <option value="Electrical Component">Electrical Components</option>
+                <option value="Tires and Wheels">Tires and Wheels</option>
+            </select>
+            </form>
+        </div>
+        <div>
+        <form class="form-inline" onsubmit="myFunction(); return false;">
+            <div><label for="email">Start:</label></div>
+            <div><input type="date" id="dateStart" placeholder="Start Date" title="Select start date"></div>
+            <div><label for="email">End:</label></div>
+            <div><input type="date" id="dateEnd" placeholder="End Date" title="Select end date"></div>
+            <div><button type="submit">Filter By Date</button></div>
         </form>
-    </div>
-    <div>
-      <form class="form-inline" onsubmit="myFunction(); return false;">
-          <label for="email">Start:</label>
-          <input type="date" id="dateStart" placeholder="Start Date" title="Select start date">
-          <label for="email">End:</label>
-          <input type="date" id="dateEnd" placeholder="End Date" title="Select end date">
-          <button type="submit">Filter By Date</button>
-      </form>
+        </div>
     </div>
 </div>
 
@@ -86,9 +118,7 @@
   <table id="myTable">
     <tr>
               <th>Date and Time</th>
-              <th>Edit Product ID</th>
-              <th>Product ID</th>
-              <th>Name</th>
+              <th>Product Name</th>
               <th>Barcode</th>
               <th>Category</th>
               <th>Model</th>    
@@ -100,14 +130,12 @@
           ?>
               <tr>
                 <td><?php echo $row['date_time']; ?></td>
-                <td><?php echo $row['edit_product_history_id']; ?></td>
-                <td><?php echo $row['product_id']; ?></td>
                 <td><?php echo $row['name']; ?></td>
-                <td><?php echo $row['barcode']; // Use the barcode text here ?></td>
+                <td><?php echo $row['barcode'];?></td>
                 <td><?php echo $row['category']; ?></td>
                 <td><?php echo $row['model']; ?></td>      
                 <td><?php echo $row['reason']; ?></td>
-                <td><?php echo $row['Id']; ?></td>     
+                <td><?php echo $row['Username']; ?></td>     
               </tr>
           <?php
               }
@@ -170,6 +198,24 @@ function sortTable(order) {
     }
 });
 
+</script>
+
+<script>
+function toggleNav() {
+  var x = document.getElementById("myTopnav");
+  if (x.className === "topnav") {
+    x.className += " responsive";
+  } else {
+    x.className = "topnav";
+  }
+}
+</script>
+
+<script>
+function toggleSearchbar() {
+  const searchbar = document.querySelector('.searchbar');
+  searchbar.classList.toggle('show');
+}
 </script>
 
 </body>
