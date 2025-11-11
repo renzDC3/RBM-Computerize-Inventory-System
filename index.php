@@ -39,7 +39,7 @@ if (time() - $_SESSION['login_attempts'][$ip]['time'] > 900) {
     $_SESSION['login_attempts'][$ip] = ['count' => 0, 'time' => time()];
 }
 
-if ($_SESSION['login_attempts'][$ip]['count'] >= 5) {
+if ($_SESSION['login_attempts'][$ip]['count'] >= 115) {
     die("Too many failed login attempts. Try again in 15 minutes.");
 }
 
@@ -138,15 +138,24 @@ if (isset($_POST['submit'])) {
   <div class="container">
     <input type="hidden" name="csrf_token" value="<?php echo generate_csrf_token(); ?>">
 
-    <label><b>Username</b></label>
-    <input type="text" name="username" placeholder="Username" required>
+    <div class="input-container">
+  <input type="text" id="username" name="username" placeholder=" " required>
+  <label for="username">USERNAME</label>
+</div>
 
-    <label><b>Password</b></label>
-    <input type="password" name="password" placeholder="Password" required>
+      <div class="input-container">
+    <input type="password" id="password" name="password" placeholder=" " required>
+    <label for="password">PASSWORD</label>
+</div>
 
-    <button type="submit" name="submit" value="Login">Login</button>
+  <button type="submit" name="submit" value="Login">Login</button>
+</button>
   </div>
 </form>
 
 </body>
 </html>
+
+    
+    
+

@@ -1,8 +1,8 @@
 <?php
 // --- Database connection ---
-$host = 'fdb1029.awardspace.net';
-$user = '4530883_rbm';
-$pass = 'archdevs4';
+$host = 'localhost';
+$user = 'root';
+$pass = '';
 $db   = '4530883_rbm';
 
 $con = new mysqli($host, $user, $pass, $db);

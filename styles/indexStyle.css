@@ -1,74 +1,271 @@
-body {font-family: Arial, Helvetica, sans-serif; font-size: smaller;}
-form {border: 3px solid #f1f1f1; margin-left: 30%; margin-right: 30%; background-color: #800000; color: white;}
+body {
 
-h2 {
-    text-align: center;
+  font-family: Arial, Helvetica, sans-serif; /* clean, modern fonts */
+
+  font-size: 14px;                           /* standard readable size */
+
+                          /* better spacing between lines */
+
+  color: #292929;                               /* dark gray text for readability */
+
+  background-color: #dddddd;                 /* light gray background for contrast */
+
+  margin: 0;
+
+  padding: 0;
+
 }
 
-input[type=text], input[type=password] {
-  width: 100%;
-  padding: 12px 20px;
-  margin: 8px 0;
-  display: inline-block;
-  border: 1px solid #ccc;
-  box-sizing: border-box;
+
+
+form {
+
+ 
+
+  border: 3px solid #f1f1f1;
+
+  padding: 20px;
+
+  margin: 20px auto;       /* centers horizontally */
+
+  max-width: 400px;        /* limits form width */
+
+  background-color: #800000;
+
+  color: white;
+
+  border-radius: 8px;      /* slightly rounded corners */
+
+  text-align: center;      /* center contents */
+
+}
+
+
+
+
+
+h2 {
+
+    text-align: center;
+
+}
+
+
+
+.input{
+
+ 
+
+}
+
+
+
+.input-container {
+
+  position: relative;
+
+  padding: 14px 20px;
+
+  margin: 8px auto;
+
+  border: none;
+
+  cursor: pointer;
+
+  width: 85%;
+
+  display: block;
+
+}
+
+
+
+.input-container input {
+
+  width: 95%;
+
+  padding: 12px 10px;
+
+  font-size: 16px;
+
+  border: 2px solid #ccc;
+
+  border-radius: 4px;
+
+  outline: none;
+
+  transition: border-color 0.3s;
+
+}
+
+
+
+.input-container label {
+
+  position: absolute;
+
+  left: 35px;
+
+  top: 25px;
+
+  color: #999;
+
+  font-size: 16px;
+
+  pointer-events: none;
+
+  transition: 0.2s ease all;
+
+}
+
+
+
+
+
+.input-container input:focus + label,
+
+.input-container input:not(:placeholder-shown) + label {
+
+  top: -5px;
+
+  left: 25px;
+
+ 
+
+  font-size: 12px;
+
+  padding: 0 4px;
+
+  color: #ffffff;
+
+}
+
+
+
+.input-container input:focus {
+
+  border-color: #007bff;
+
 }
 
 button {
+
   background-color: #222222;
+
   color: white;
+
   padding: 14px 20px;
-  margin: 8px 0;
+
+  margin: 8px auto;
+
   border: none;
+
   cursor: pointer;
-  width: 100%;
+
+  width: 85%;
+
+  display: block;
+
 }
+
+
+
+
 
 button:hover {
+
   background-color: #3b3b3b;
+
 }
+
+
 
 .cancelbtn {
+
   width: auto;
+
   padding: 10px 18px;
+
   background-color: #880808;
+
 }
+
+
 
 .imgcontainer {
+
   text-align: center;
+
   margin: 24px 0 12px 0;
+
 }
+
+
 
 img.avatar {
+
   width: 50%;
-  /*border-radius: 50%;*/
+
+ 
+
+  border-radius: 7%;
+
 }
+
+
 
 .container {
+
   padding: 16px;
+
 }
+
+
 
 span.psw {
+
   float: right;
+
   padding-top: 16px;
+
 }
+
+
 
 .login_error_message {
+
     text-align: center;
+
     color: white;
+
 }
+
+
 
 @media only screen and (max-width: 620px) {
+
   /* For mobile phones: */
+
   form {margin-left: 3%; margin-right: 3%}
+
 }
 
+
+
 @media screen and (max-width: 300px) {
+
   span.psw {
+
      display: block;
+
      float: none;
+
   }
+
   .cancelbtn {
+
      width: 100%;
+
   }
+
 }
