@@ -324,7 +324,7 @@ tr:nth-child(even) {
   
 }
 
-.modalHorizontal input[type=text], .modalHorizontal input[type=number], .modalHorizontal select{
+.modalHorizontal input[type=text], .modalHorizontal input[type=number], .modalHorizontal select, .modalHorizontal input[type=password]{
   margin: -3px 12px;
   font-size: medium;
   width: 150px;

@@ -24,18 +24,18 @@ $result = mysqli_query($con, $query);
 <div class="topnav" id="myTopnav">
   <a class="image"><img src="images/rbm_tex.jpg" style="width: 50px; height: 15px"></a>
 
-  <?php if ($_SESSION['valid'] === 'Admin' or $_SESSION['valid'] === 'Manager') { ?>
+  <?php if ($_SESSION['role'] === 'Admin' or $_SESSION['role'] === 'Manager') { ?>
       <a href="dashboard.php">Dashboard</a>           
   <?php } ?>
 
   <a href="products.php">Products</a>
 
-  <?php if ($_SESSION['valid'] != 'Manager') { ?>
+  <?php if ($_SESSION['role'] != 'Manager') { ?>
     <a href="sales.php">Sales</a>
     <a href="services.php">Services</a>
   <?php } ?> 
 
-  <?php if ($_SESSION['valid'] === 'Admin'  or $_SESSION['valid'] === 'Manager') { ?>
+  <?php if ($_SESSION['role'] === 'Admin'  or $_SESSION['role'] === 'Manager') { ?>
       <a href="history.php">History</a>
       <a href="employees.php">Employees</a>
       <a class="active" href="suppliers.php">Suppliers</a>
@@ -43,11 +43,11 @@ $result = mysqli_query($con, $query);
       <a href="cloud.php">Backup</a>
   <?php } ?>
 
-  <?php if ($_SESSION['valid'] === 'Admin') { ?>
+  <?php if ($_SESSION['role'] === 'Admin'  or $_SESSION['role'] === 'Manager') { ?>
 
   <a href="system_log.php">System Log</a>
 
-  <?php } ?>  
+  <?php } ?> 
 
   <a class="logout" href="logout.php">Logout</a>
 
@@ -69,7 +69,7 @@ $result = mysqli_query($con, $query);
         <div class="modal-content">
             <span onclick="closeModal('modal-add-supplier')" class="close">&times;</span>
             <h3>Add Supplier</h3>
-            <form action="delete_supplier.php" method="POST" enctype="multipart/form-data">
+            <form action="add_supplier.php" method="POST" enctype="multipart/form-data">
             <div class="modalHorizontal">
                 <input type="hidden" name="csrf_token" value="<?php echo generate_csrf_token(); ?>">
 
@@ -110,7 +110,7 @@ $result = mysqli_query($con, $query);
         <th>Contact No.</th>
         <th>Supplier Email</th>
         <th>Date Added</th>
-        <th>Action</th>
+        <th colspan="5" class="action" style="text-align: center;">Action</th>
       </tr>
     </thead>
     
@@ -118,10 +118,54 @@ $result = mysqli_query($con, $query);
     <?php while ($row = mysqli_fetch_assoc($result)) { ?>
       <tr>
         <td><?= $row['supplier_name']; ?></td>
-        <td><?= $row['supplier__business_address']; ?></td>
+        <td><?= $row['supplier_business_address']; ?></td>
         <td><?= $row['supplier_contact_no']; ?></td>
         <td><?= $row['supplier_email']; ?></td>
-        <td><?= $row['supplier_date_added']; ?></td>      
+        <td><?= $row['supplier_date_added']; ?></td>  
+        
+        <td style="padding: 5px;">
+          <button onclick="openModal('modal-edit-<?= $row['supplier_id']; ?>')">
+            <i class="fa-solid fa-pen-to-square"></i>&nbsp;Edit
+          </button>
+
+          <div id="modal-edit-<?= $row['supplier_id']; ?>" class="modal">
+            <div class="modal-content">
+              <span onclick="closeModal('modal-edit-<?= $row['supplier_id']; ?>')" class="close">&times;</span>
+              <h3>Edit Supplier</h3>
+              <form action="edit_supplier.php" method="POST">
+                <<div class="modalHorizontal">
+                  <input type="hidden" name="supplier_id" value="<?= $row['supplier_id']; ?>">
+                    <input type="hidden" name="csrf_token" value="<?php echo generate_csrf_token(); ?>">
+
+                    <div><label for="name"><b>Supplier Name</b></label></div>
+                    <div><input type="text" placeholder="Enter Supplier Name" name="name"></div>
+
+                    <div><label for="businessaddress"><b>Business Address</b></label></div>
+                    <div><input type="text" placeholder="Enter Last Name" name="businessaddress"></div>
+
+                    <div><label for="contactno"><b>Contact No.</b></label></div>
+                    <div><input type="number" placeholder="Enter Contact No." name="contactno"></div>
+                </div>
+                <br>
+                
+                <div class="modalHorizontal">
+                    <div><label for="emailaddress"><b>Email Address</b></label></div>
+                    <div><input type="text" placeholder="Enter Email Address" name="emailaddress"></div>              
+                </div>
+
+                <br>   
+
+                <br> 
+                <hr>
+                <div class="confirmOrCancel">
+                  <button type="button" onclick="closeModal('modal-edit-<?= $row['supplier_id']; ?>')" class="cancelbtn">Cancel</button>
+                  <button type="submit" class="confirm" style="float: right">Confirm</button>
+                </div>
+                
+              </form>
+            </div>
+          </div>
+        </td>
 
         <td style="padding: 5px;">
           <button onclick="openModal('modal-delete-<?= $row['supplier_id']; ?>')">
@@ -137,6 +181,7 @@ $result = mysqli_query($con, $query);
                     <p>Are you sure you want to delete this Supplier's Information from the database?</p>
                     <hr>
                     <input type="hidden" name="Id" value="<?= $row['supplier_id']; ?>">
+                    <input type="hidden" name="csrf_token" value="<?php echo generate_csrf_token(); ?>">
 
                     <div class="confirmOrCancel">
                       <button type="button" onclick="closeModal('modal-delete-<?= $row['supplier_id']; ?>')" class="cancelbtn">Cancel</button>

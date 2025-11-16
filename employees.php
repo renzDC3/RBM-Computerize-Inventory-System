@@ -24,18 +24,18 @@ $result = mysqli_query($con, $query);
 <div class="topnav" id="myTopnav">
   <a class="image"><img src="images/rbm_tex.jpg" style="width: 50px; height: 15px"></a>
 
-  <?php if ($_SESSION['valid'] === 'Admin' or $_SESSION['valid'] === 'Manager') { ?>
+  <?php if ($_SESSION['role'] === 'Admin' or $_SESSION['role'] === 'Manager') { ?>
       <a href="dashboard.php">Dashboard</a>           
   <?php } ?>
 
   <a href="products.php">Products</a>
 
-  <?php if ($_SESSION['valid'] != 'Manager') { ?>
+  <?php if ($_SESSION['role'] != 'Manager') { ?>
     <a href="sales.php">Sales</a>
     <a href="services.php">Services</a>
   <?php } ?> 
 
-  <?php if ($_SESSION['valid'] === 'Admin'  or $_SESSION['valid'] === 'Manager') { ?>
+  <?php if ($_SESSION['role'] === 'Admin'  or $_SESSION['role'] === 'Manager') { ?>
       <a href="history.php">History</a>
       <a class="active" href="employees.php">Employees</a>
       <a href="suppliers.php">Suppliers</a>
@@ -43,11 +43,11 @@ $result = mysqli_query($con, $query);
       <a href="cloud.php">Backup</a>
   <?php } ?>
 
-  <?php if ($_SESSION['valid'] === 'Admin') { ?>
+  <?php if ($_SESSION['role'] === 'Admin'  or $_SESSION['role'] === 'Manager') { ?>
 
   <a href="system_log.php">System Log</a>
 
-  <?php } ?>  
+  <?php } ?>
 
   <a class="logout" href="logout.php">Logout</a>
 
@@ -88,6 +88,13 @@ $result = mysqli_query($con, $query);
             <br>
             
             <div class="modalHorizontal">
+                <div><label for="category"><b>Category</b></label></div>
+                <div><select id="role" placeholder="Select Role" name="role" required>
+                    <option class="placeholder" value="" disabled selected>Select Role</option>                    
+                      <option value="Manager">Manager</option>
+                      <option value="Employee">Employee</option>
+                  </select></div>
+
                 <div><label for="password"><b>Password</b></label></div>
                 <div><input type="password" placeholder="Enter Password" name="password" required></div>
             </div>
@@ -112,18 +119,62 @@ $result = mysqli_query($con, $query);
         <th>Last Name</th>
         <th>Date Joined</th>
         <th>Username</th>
-        <th>Action</th>
+        <th colspan="5" class="action" style="text-align: center;">Action</th>
       </tr>
     </thead>
     
 
     <?php while ($row = mysqli_fetch_assoc($result)) { ?>
-      <?php if ($row['Username'] === 'Admin' || $row['Username'] === 'Manager') continue; ?>
+      <?php if ($row['role'] != 'Employee') continue; ?>
       <tr>
         <td><?= $row['first_name']; ?></td>
         <td><?= $row['last_name']; ?></td>
         <td><?= $row['date_joined']; ?></td>
-        <td><?= $row['Username']; ?></td>       
+        <td><?= $row['Username']; ?></td>
+        <td style="display:none"><?= $row['role']; ?></td> 
+        
+        <td style="padding: 5px;">
+          <button onclick="openModal('modal-edit-<?= $row['Id']; ?>')">
+            <i class="fa-solid fa-pen-to-square"></i>&nbsp;Edit
+          </button>
+
+          <div id="modal-edit-<?= $row['Id']; ?>" class="modal">
+            <div class="modal-content">
+              <span onclick="closeModal('modal-edit-<?= $row['Id']; ?>')" class="close">&times;</span>
+              <h3>Edit Employee</h3>
+              <form action="edit_employee.php" method="POST">
+                <div class="modalHorizontal">
+                   <input type="hidden" name="Id" value="<?= $row['Id']; ?>">
+                    <input type="hidden" name="csrf_token" value="<?php echo generate_csrf_token(); ?>">
+
+                  <div><label for="fname"><b>First Name</b></label></div>
+                  <div><input type="text" placeholder="Enter First Name" name="fname"></div>
+
+                  <div><label for="lname"><b>Last Name</b></label></div>
+                  <div><input type="text" placeholder="Enter Last Name" name="lname"></div>
+
+                  <div><label for="username"><b>Username</b></label></div>
+                  <div><input type="text" placeholder="Enter Username" name="username"></div>
+
+                  <div><label for="username"><b>Regenerate two factor code?</legend></b></label></div>
+                  <div><label><input type="radio" name="agreement" value="yes">Yes</label></div>
+                  <div><label><input type="radio" name="agreement" value="no">No</label></div>
+                
+                </div>
+
+                <br>   
+
+                <br> 
+                <hr>
+                <div class="confirmOrCancel">
+                  <button type="button" onclick="closeModal('modal-edit-<?= $row['Id']; ?>')" class="cancelbtn">Cancel</button>
+                  <button type="submit" class="confirm" style="float: right">Confirm</button>
+                </div>
+                
+              </form>
+            </div>
+          </div>
+        </td>
 
         <td style="padding: 5px;">
           <button onclick="openModal('modal-delete-<?= $row['Id']; ?>')">
